@@ -1,15 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export type Ticket = {
-  type: 'standard' | 'vip' | 'platinum';
-  value: number;
-};
-
-export type TicketsSimulation = Ticket & {
-  amount: number;
-};
-
 export const formattedPrice = (value: number) => {
   return `R$ ${value.toFixed(2)}`;
 };
