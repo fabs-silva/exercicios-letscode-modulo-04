@@ -1,4 +1,6 @@
-export const ticketsInfo = {
+import { TicketInfoProps } from '../pages/ConcertCard';
+
+export const ticketsInfo: TicketInfoProps = {
   bandName: 'Brainstorm',
   country: 'Latvia',
   city: 'Riga',

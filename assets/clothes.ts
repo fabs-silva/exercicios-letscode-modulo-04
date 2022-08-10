@@ -10,6 +10,17 @@ export type ClothingAd = {
   isInStock: boolean;
 };
 
+export const clothesType = [
+  { label: 'T-Shirts', value: 'tshirt' },
+  { label: 'Shorts', value: 'short' },
+  { label: 'Shirts', value: 'shirt' },
+  { label: 'Underwear', value: 'underwear' },
+  { label: 'Socks', value: 'sock' },
+  { label: 'Accessories', value: 'accessory' },
+  { label: 'Skirts', value: 'skirt' },
+  { label: 'Shoes', value: 'shoes' },
+];
+
 export const clothes: ClothingAd[] = [
   {
     id: 0,
@@ -25,13 +36,13 @@ export const clothes: ClothingAd[] = [
   },
   {
     id: 1,
-    title: "Camiseta Maneskin 'Zitti e Buoni'",
-    type: 'tshirt',
-    color: 'white',
+    title: "Modern Sunglasses'",
+    type: 'accessory',
+    color: 'brown',
     image:
       'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTzQz18YZK9dmWSG6HT1LJTlH8TaIcsLq1ddOMaxLl9uvZUau0BIyPt2Uxmkprtkl3X2FembENV8r9Ve64-cIYtzXrcC1Gq&usqp=CAY',
-    originalValue: 45,
-    currentValue: 45,
+    originalValue: 90,
+    currentValue: 90,
     isDiscounted: false,
     isInStock: false,
   },
