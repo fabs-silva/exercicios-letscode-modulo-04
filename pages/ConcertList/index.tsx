@@ -1,28 +1,36 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { TicketInfoProps } from '../../assets/ticketInfo';
+import React from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { ticketsInfo } from '../../assets/ticketInfo';
+import { ConcertCard } from '../ConcertCard';
 
-const cardContainerHeight: number = Dimensions.get('window').height - 50;
-
-export function ConcertList(props: { concerts: TicketInfoProps[] }) {
+export function ConcertList() {
   return (
-    <View style={styles.cardListContainer}>
-      {props.concerts.map((concert) => {
-        return (
-          <View>
-            <Text>{concert.bandName}</Text>
-          </View>
-        );
-      })}
+    <View style={styles.container}>
+      <FlatList
+        data={ticketsInfo}
+        renderItem={ConcertCard}
+        keyExtractor={({ bandName }) => bandName}
+        ListHeaderComponent={() => {
+          return <Text style={styles.title}>Concerts List</Text>;
+        }}
+        numColumns={2}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  cardListContainer: {
-    flex: 1,
-    height: cardContainerHeight,
-    backgroundColor: '#fff',
-    marginVertical: 20,
+  container: {
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  title: {
+    color: '#fff',
+    fontSize: 25,
+    fontWeight: '700',
+    textAlign: 'center',
+    fontFamily: 'RubikDirt',
+    marginBottom: 10,
   },
 });
