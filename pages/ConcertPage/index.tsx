@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
-
 import {
   Dimensions,
   FlatList,
@@ -10,33 +9,47 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { TicketsSimulation, TicketInfoProps } from '../../assets/ticketInfo';
-import { FlatListItem, formattedPrice } from './FlatListItem';
+import { ticketsInfo, TicketsSimulation } from '../../assets/ticketInfo';
+import { FlatListItem, TicketPurchase } from './FlatListItem';
+
+type RootStackParamList = {
+  ConcertList: undefined;
+  ConcertPage: { ticketId: number };
+};
 
 const cardContainerHeight: number = Dimensions.get('window').height - 50;
 const flatlistWidth: number = Dimensions.get('window').width - 70;
 
-export function ConcertPage(props: { ticketInfo: TicketInfoProps }) {
-  const formattedDate = format(props.ticketInfo.date, 'dd/MM/yyyy');
+export function ConcertPage({ route, navigation }) {
+  const ticketInfo = ticketsInfo.find((ticket) => ticket.id === route.params);
+  const formattedDate = ticketInfo && format(ticketInfo.date, 'dd/MM/yyyy');
 
-  const [price, setPrice] = useState<number>(0);
+  const [ticketPurchase, setTicketPurchase] = useState<TicketPurchase>({
+    ticketId: ticketInfo?.id,
+    purchaseInfo: {},
+  } as TicketPurchase);
 
   const renderItem: ListRenderItem<TicketsSimulation> = ({ item }) => {
-    return <FlatListItem ticket={item} price={price} setPrice={setPrice} />;
+    return (
+      <FlatListItem
+        ticket={item}
+        ticketPurchase={ticketPurchase}
+        setTicketPurchase={setTicketPurchase}
+      />
+    );
   };
 
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardBasicInfo}>
         <Text style={styles.label}>
-          Band Name:{' '}
-          <Text style={styles.item}>{props.ticketInfo.bandName}</Text>
+          Band Name: <Text style={styles.item}>{ticketInfo?.bandName}</Text>
         </Text>
         <Text style={styles.label}>
-          Country: <Text style={styles.item}>{props.ticketInfo.country}</Text>
+          Country: <Text style={styles.item}>{ticketInfo?.country}</Text>
         </Text>
         <Text style={styles.label}>
-          City: <Text style={styles.item}>{props.ticketInfo.city}</Text>
+          City: <Text style={styles.item}>{ticketInfo?.city}</Text>
         </Text>
         <Text style={styles.label}>
           Date: <Text style={styles.item}>{formattedDate}</Text>
@@ -50,15 +63,23 @@ export function ConcertPage(props: { ticketInfo: TicketInfoProps }) {
         </View>
       </View>
       <FlatList
-        data={props.ticketInfo.ticketsSimulation}
+        data={ticketInfo?.ticketsSimulation}
         renderItem={renderItem}
         keyExtractor={(item) => item.type}
         style={styles.flatList}
-        extraData={price}
+        /* extraData={(key) => ticketPurchase.purchaseInfo[key].category} */
       ></FlatList>
       <View style={styles.cardPrice}>
         <Text style={styles.label}>
-          Total Price: <Text style={styles.item}>{formattedPrice(price)}</Text>
+          Total Price:{' '}
+          <Text style={styles.item}>
+            {/* {formattedPrice(
+              ticketPurchase?.purchaseInfo?.reduce((acc, item) => {
+                acc += item.price;
+                return acc;
+              }, 0)
+            )} */}
+          </Text>
         </Text>
       </View>
       <View
@@ -68,7 +89,12 @@ export function ConcertPage(props: { ticketInfo: TicketInfoProps }) {
           justifyContent: 'center',
         }}
       >
-        <TouchableOpacity style={styles.buyButton}>
+        <TouchableOpacity
+          style={styles.buyButton}
+          onPress={() => {
+            navigation.navigate('purchase', ticketInfo?.id);
+          }}
+        >
           <Text style={styles.buyButtonText}>Buy</Text>
         </TouchableOpacity>
       </View>

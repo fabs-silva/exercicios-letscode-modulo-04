@@ -8,8 +8,8 @@ export function ConcertList() {
     <View style={styles.container}>
       <FlatList
         data={ticketsInfo}
-        renderItem={ConcertCard}
-        keyExtractor={({ bandName }) => bandName}
+        renderItem={(item) => <ConcertCard item={item.item} />}
+        keyExtractor={({ id }) => id.toString()}
         ListHeaderComponent={() => {
           return <Text style={styles.title}>Concerts List</Text>;
         }}
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '700',
     textAlign: 'center',
-    fontFamily: 'RubikDirt',
     marginBottom: 10,
   },
 });

@@ -1,16 +1,45 @@
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TicketsSimulation } from '../../assets/ticketInfo';
 
 export const formattedPrice = (value: number) => {
   return `R$ ${value.toFixed(2)}`;
 };
 
+export type TicketPurchase = {
+  ticketId: number;
+  purchaseInfo: {
+    category: string;
+    price: number;
+    amount: number;
+    total: number;
+  }[];
+};
+
 export function FlatListItem(props: {
   ticket: TicketsSimulation;
-  price: number;
-  setPrice: (price: number) => void;
+  ticketPurchase: TicketPurchase;
+  setTicketPurchase: (ticketPurchase: TicketPurchase) => void;
 }) {
   const [newAmount, setNewAmount] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
+
+  const updateList = () => {
+    const newList = props.ticketPurchase.purchaseInfo.filter(
+      (t) => t.category !== props.ticket.type
+    );
+    const purchase = {
+      category: props.ticket.type,
+      price: props.ticket.value,
+      amount: newAmount,
+      total: price,
+    };
+    newList.push(purchase);
+    props.setTicketPurchase({
+      ticketId: props.ticketPurchase.ticketId,
+      purchaseInfo: newList,
+    });
+  };
 
   return (
     <View style={styles.flatItem}>
@@ -26,7 +55,8 @@ export function FlatListItem(props: {
               return;
             }
             setNewAmount(newAmount - 1);
-            props.setPrice(props.price - props.ticket.value);
+            setPrice(price - props.ticket.value);
+            updateList();
           }}
         >
           <Text style={styles.flatButtonAmountText}>-</Text>
@@ -36,7 +66,8 @@ export function FlatListItem(props: {
           style={styles.flatButtonAmount}
           onPress={() => {
             setNewAmount(newAmount + 1);
-            props.setPrice(props.price + props.ticket.value);
+            setPrice(price + props.ticket.value);
+            updateList();
           }}
         >
           <Text style={styles.flatButtonAmountText}>+</Text>

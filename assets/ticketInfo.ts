@@ -8,6 +8,7 @@ export type TicketsSimulation = Ticket & {
 };
 
 export type ConcertCardInfo = {
+  id: number;
   bandName: string;
   country: string;
   city: string;
@@ -15,6 +16,7 @@ export type ConcertCardInfo = {
 };
 
 export type TicketInfoProps = {
+  id: number;
   bandName: string;
   country: string;
   city: string;
@@ -25,6 +27,7 @@ export type TicketInfoProps = {
 
 export const ticketsInfo: TicketInfoProps[] = [
   {
+    id: 1,
     bandName: 'Brainstorm',
     country: 'Latvia',
     city: 'Riga',
@@ -66,6 +69,7 @@ export const ticketsInfo: TicketInfoProps[] = [
     ],
   },
   {
+    id: 2,
     bandName: 'Malo',
     country: 'France',
     city: 'Paris',
@@ -107,6 +111,7 @@ export const ticketsInfo: TicketInfoProps[] = [
     ],
   },
   {
+    id: 3,
     bandName: 'LUNA',
     country: 'Poland',
     city: 'Krakow',
@@ -148,6 +153,7 @@ export const ticketsInfo: TicketInfoProps[] = [
     ],
   },
   {
+    id: 4,
     bandName: 'La Pegatina',
     country: 'Spain',
     city: 'Barcelona',
@@ -189,6 +195,7 @@ export const ticketsInfo: TicketInfoProps[] = [
     ],
   },
   {
+    id: 5,
     bandName: 'Konstrakta',
     country: 'Serbia',
     city: 'Novi Sad',
@@ -230,6 +237,7 @@ export const ticketsInfo: TicketInfoProps[] = [
     ],
   },
   {
+    id: 6,
     bandName: 'Subwolfer',
     country: 'Norway',
     city: 'Oslo',
