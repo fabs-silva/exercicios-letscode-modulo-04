@@ -1,55 +1,40 @@
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useReducer } from 'react';
 import {
   Dimensions,
   FlatList,
-  ListRenderItem,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { ticketsInfo, TicketsSimulation } from '../../assets/ticketInfo';
-import { FlatListItem, TicketPurchase } from './FlatListItem';
-
-type RootStackParamList = {
-  ConcertList: undefined;
-  ConcertPage: { ticketId: number };
-};
+import { ticketsInfo } from '../../assets/ticketInfo';
+import { ticketReducer } from '../../ticketReducer';
+import { FlatListItem, formattedPrice } from './FlatListItem';
 
 const cardContainerHeight: number = Dimensions.get('window').height - 50;
 const flatlistWidth: number = Dimensions.get('window').width - 70;
 
 export function ConcertPage({ route, navigation }) {
   const ticketInfo = ticketsInfo.find((ticket) => ticket.id === route.params);
-  const formattedDate = ticketInfo && format(ticketInfo.date, 'dd/MM/yyyy');
+  const [state, dispatch] = useReducer(ticketReducer, ticketInfo);
+  const formattedDate = ticketInfo && format(state.date, 'dd/MM/yyyy');
 
-  const [ticketPurchase, setTicketPurchase] = useState<TicketPurchase>({
-    ticketId: ticketInfo?.id,
-    purchaseInfo: {},
-  } as TicketPurchase);
-
-  const renderItem: ListRenderItem<TicketsSimulation> = ({ item }) => {
-    return (
-      <FlatListItem
-        ticket={item}
-        ticketPurchase={ticketPurchase}
-        setTicketPurchase={setTicketPurchase}
-      />
-    );
+  const renderItem = ({ item }) => {
+    return <FlatListItem state={state} dispatch={dispatch} type={item.type} />;
   };
 
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardBasicInfo}>
         <Text style={styles.label}>
-          Band Name: <Text style={styles.item}>{ticketInfo?.bandName}</Text>
+          Band Name: <Text style={styles.item}>{state.bandName}</Text>
         </Text>
         <Text style={styles.label}>
-          Country: <Text style={styles.item}>{ticketInfo?.country}</Text>
+          Country: <Text style={styles.item}>{state.country}</Text>
         </Text>
         <Text style={styles.label}>
-          City: <Text style={styles.item}>{ticketInfo?.city}</Text>
+          City: <Text style={styles.item}>{state.city}</Text>
         </Text>
         <Text style={styles.label}>
           Date: <Text style={styles.item}>{formattedDate}</Text>
@@ -63,22 +48,21 @@ export function ConcertPage({ route, navigation }) {
         </View>
       </View>
       <FlatList
-        data={ticketInfo?.ticketsSimulation}
+        data={state.ticketsSimulation.sort((a, b) => a.id - b.id)}
         renderItem={renderItem}
-        keyExtractor={(item) => item.type}
+        keyExtractor={(item) => item.id}
         style={styles.flatList}
-        /* extraData={(key) => ticketPurchase.purchaseInfo[key].category} */
       ></FlatList>
       <View style={styles.cardPrice}>
         <Text style={styles.label}>
           Total Price:{' '}
           <Text style={styles.item}>
-            {/* {formattedPrice(
-              ticketPurchase?.purchaseInfo?.reduce((acc, item) => {
-                acc += item.price;
+            {formattedPrice(
+              state.ticketsSimulation.reduce((acc, item) => {
+                acc += parseFloat(item.amount) * parseFloat(item.value);
                 return acc;
               }, 0)
-            )} */}
+            )}
           </Text>
         </Text>
       </View>
@@ -92,7 +76,11 @@ export function ConcertPage({ route, navigation }) {
         <TouchableOpacity
           style={styles.buyButton}
           onPress={() => {
-            navigation.navigate('purchase', ticketInfo?.id);
+            const passState = {
+              ...state,
+              date: formattedDate,
+            };
+            navigation.navigate('purchase', passState);
           }}
         >
           <Text style={styles.buyButtonText}>Buy</Text>
@@ -107,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: cardContainerHeight,
     backgroundColor: '#fff',
-    marginVertical: 20,
+    paddingVertical: 20,
     justifyContent: 'center',
   },
   cardBasicInfo: {

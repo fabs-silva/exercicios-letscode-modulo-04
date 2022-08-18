@@ -23,12 +23,13 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 20,
   },
 
   title: {
-    color: '#fff',
+    color: '#117864',
+    fontFamily: 'Jost_700Bold',
     fontSize: 25,
-    fontWeight: '700',
     textAlign: 'center',
     marginBottom: 10,
   },

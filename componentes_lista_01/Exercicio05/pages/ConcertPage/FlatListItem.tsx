@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TicketsSimulation } from '../../assets/ticketInfo';
 
@@ -8,66 +7,66 @@ export const formattedPrice = (value: number) => {
 
 export type TicketPurchase = {
   ticketId: number;
-  purchaseInfo: {
-    category: string;
-    price: number;
-    amount: number;
-    total: number;
-  }[];
+  purchaseInfo: TicketsSimulation[];
 };
 
-export function FlatListItem(props: {
-  ticket: TicketsSimulation;
-  ticketPurchase: TicketPurchase;
-  setTicketPurchase: (ticketPurchase: TicketPurchase) => void;
-}) {
-  const [newAmount, setNewAmount] = useState<number>(0);
-  const [price, setPrice] = useState<number>(0);
-
-  const updateList = () => {
-    const newList = props.ticketPurchase.purchaseInfo.filter(
-      (t) => t.category !== props.ticket.type
-    );
-    const purchase = {
-      category: props.ticket.type,
-      price: props.ticket.value,
-      amount: newAmount,
-      total: price,
-    };
-    newList.push(purchase);
-    props.setTicketPurchase({
-      ticketId: props.ticketPurchase.ticketId,
-      purchaseInfo: newList,
-    });
-  };
+export function FlatListItem(props: { state; dispatch; type }) {
+  const item = props.state.ticketsSimulation.find(
+    (tp) => tp.type === props.type
+  );
 
   return (
     <View style={styles.flatItem}>
-      <Text style={styles.flatLabel}>{props.ticket.type}</Text>
-      <Text style={styles.flatTextPrice}>
-        {formattedPrice(props.ticket.value)}
-      </Text>
+      <Text style={styles.flatLabel}>{item?.type}</Text>
+      <Text style={styles.flatTextPrice}>{formattedPrice(item?.value)}</Text>
       <View style={styles.flatContainerAmount}>
         <TouchableOpacity
           style={styles.flatButtonAmount}
           onPress={() => {
-            if (newAmount <= 0) {
+            if (item?.amount <= 0) {
               return;
             }
-            setNewAmount(newAmount - 1);
-            setPrice(price - props.ticket.value);
-            updateList();
+
+            const filteredList = props.state.ticketsSimulation.filter(
+              (tp) => tp.type !== props.type
+            );
+
+            const newTicketSimulation = [
+              ...filteredList,
+              {
+                ...item,
+                amount: item.amount - 1,
+              },
+            ];
+
+            props.dispatch({
+              type: 'CHANGE_STATE',
+              payload: newTicketSimulation,
+            });
           }}
         >
           <Text style={styles.flatButtonAmountText}>-</Text>
         </TouchableOpacity>
-        <Text style={styles.flatTextAmount}>{newAmount}</Text>
+        <Text style={styles.flatTextAmount}>{item?.amount}</Text>
         <TouchableOpacity
           style={styles.flatButtonAmount}
           onPress={() => {
-            setNewAmount(newAmount + 1);
-            setPrice(price + props.ticket.value);
-            updateList();
+            const filteredList = props.state.ticketsSimulation.filter(
+              (tp) => tp.type !== props.type
+            );
+
+            const newTicketSimulation = [
+              ...filteredList,
+              {
+                ...item,
+                amount: item.amount + 1,
+              },
+            ];
+
+            props.dispatch({
+              type: 'CHANGE_STATE',
+              payload: newTicketSimulation,
+            });
           }}
         >
           <Text style={styles.flatButtonAmountText}>+</Text>
