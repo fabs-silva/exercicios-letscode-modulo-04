@@ -13,6 +13,7 @@ export type Product = {
   country: string;
   image: string;
   price: number;
+  amount?: number;
 };
 
 export const productsList: Product[] = [
