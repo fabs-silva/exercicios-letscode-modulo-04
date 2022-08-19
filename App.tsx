@@ -4,11 +4,10 @@ import {
   useFonts,
 } from '@expo-google-fonts/jost';
 import React from 'react';
-import { Dimensions, StatusBar, StyleSheet, Text } from 'react-native';
+import { StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-const windowWidth: number = Dimensions.get('window').width;
-const windowHeight: number = Dimensions.get('window').height;
+import { Routes } from './Routes';
+import { colors } from './variables';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -21,20 +20,9 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="#073b4c" />
-      <Text>Texto</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar backgroundColor={colors.bgColor} />
+      <Routes />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: windowWidth,
-    height: windowHeight,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-});
