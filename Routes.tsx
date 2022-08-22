@@ -1,29 +1,23 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-import { Cart } from "./pages/Cart";
-import { PurchaseHistory } from "./pages/History";
-import { ProductsList } from "./pages/ProductsList";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import { Feed } from './pages/Feed';
+import { Login } from './pages/Login';
 
 const Stack = createNativeStackNavigator();
 
 export function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="productsList">
+      <Stack.Navigator initialRouteName="feed">
         <Stack.Screen
-          component={ProductsList}
-          name="productsList"
+          component={Login}
+          name="login"
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          component={Cart}
-          name="cart"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          component={PurchaseHistory}
-          name="history"
+          component={Feed}
+          name="feed"
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

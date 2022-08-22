@@ -1,7 +1,7 @@
 export const colors = {
-  bgColor: '#e9c3b1',
-  lightColor: '#f5f9fa',
-  darkColor: '#311d23',
-  accentColor: '#ab523c',
-  baseColor: '#8d7066',
+  blue: '#1da1f2',
+  black: '#14171a',
+  darkGray: '#657786',
+  lightGray: '#aab8c2',
+  extraExtraLightGray: '#f5f8fa',
 };
