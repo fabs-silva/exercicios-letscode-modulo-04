@@ -1,9 +1,9 @@
-import { Dimensions } from 'react-native';
-import styled from 'styled-components/native';
-import { colors } from '../../variables';
+import { Dimensions } from "react-native";
+import styled from "styled-components/native";
+import { colors } from "../../variables";
 
-const windowWidth: number = Dimensions.get('window').width;
-const windowHeight: number = Dimensions.get('window').height;
+const windowWidth: number = Dimensions.get("window").width;
+const windowHeight: number = Dimensions.get("window").height;
 
 const CartContainer = styled.View`
   flex: 1;
@@ -14,7 +14,6 @@ const CartContainer = styled.View`
 `;
 
 const CartTitle = styled.Text`
-  width: 90%;
   font-size: 25px;
   color: ${colors.accentColor};
   font-family: Jost_700Bold;
@@ -22,6 +21,7 @@ const CartTitle = styled.Text`
 
 const CartProducts = styled.View`
   width: 100%;
+  height: 68%;
   padding: 10px;
 `;
 
@@ -42,7 +42,7 @@ const CartButtonText = styled.Text`
 const CartHeader = styled.View`
   width: 100%;
   background-color: ${colors.bgColor};
-  padding: 0 15px 25px 15px;
+  padding: 20px 20px 25px 20px;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
@@ -54,6 +54,17 @@ const CartButtonTop = styled.TouchableOpacity`
   padding: 8px;
 `;
 
+const CartTotal = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px 0;
+`;
+
+const CartTotalText = styled.Text`
+  font-family: "Jost_700Bold";
+  font-size: 20px;
+`;
+
 export {
   CartContainer,
   CartTitle,
@@ -62,4 +73,6 @@ export {
   CartButtonText,
   CartHeader,
   CartButtonTop,
+  CartTotal,
+  CartTotalText,
 };

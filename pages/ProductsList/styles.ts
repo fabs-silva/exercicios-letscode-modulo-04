@@ -1,9 +1,9 @@
-import { Dimensions } from 'react-native';
-import styled from 'styled-components/native';
-import { colors } from '../../variables';
+import { Dimensions } from "react-native";
+import styled from "styled-components/native";
+import { colors } from "../../variables";
 
-const windowWidth: number = Dimensions.get('window').width;
-const windowHeight: number = Dimensions.get('window').height;
+const windowWidth: number = Dimensions.get("window").width;
+const windowHeight: number = Dimensions.get("window").height;
 
 const ProductListContainer = styled.View`
   flex: 1;
@@ -18,7 +18,7 @@ const ProductListContainer = styled.View`
 const ProductListHeader = styled.View`
   width: 100%;
   background-color: ${colors.bgColor};
-  padding: 0 15px 25px 15px;
+  padding: 15px 15px 25px 15px;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;

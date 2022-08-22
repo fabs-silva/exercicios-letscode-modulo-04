@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Product } from '../../../assets/productsList';
+import React, { useState } from "react";
+import { Product } from "../../../assets/productsList";
 import {
   ProductButton,
   ProductButtonText,
@@ -13,13 +13,15 @@ import {
   ProductQuantityBox,
   ProductText,
   ProductTitle,
-} from './styles';
+} from "./styles";
 
-import Icon from 'react-native-vector-icons/Ionicons';
-import { colors } from '../../../variables';
+import Icon from "react-native-vector-icons/Ionicons";
+import { useCart } from "../../../CartContext";
+import { colors } from "../../../variables";
 
 export const RenderedProduct = (props: { item: Product }) => {
-  const [qtd, onChangeQtd] = useState<string>('');
+  const [qtd, onChangeQtd] = useState<string>("");
+  const { setAmount } = useCart();
   return (
     <ProductCard>
       <ProductImage source={props.item.image} resizeMode="contain" />
@@ -41,7 +43,13 @@ export const RenderedProduct = (props: { item: Product }) => {
           </ProductQuantityBox>
         </ProductPriceBox>
       </ProductInfo>
-      <ProductButton>
+      <ProductButton
+        onPress={() => {
+          const numericQtd = !qtd ? 0 : parseInt(qtd);
+          setAmount(props.item.id, numericQtd, props.item.price);
+          onChangeQtd("");
+        }}
+      >
         <ProductButtonText>
           <Icon name="cart" size={20} color={colors.lightColor} /> Add To Cart
         </ProductButtonText>

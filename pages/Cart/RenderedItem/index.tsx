@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { Product } from '../../../assets/productsList';
+import React, { useState } from "react";
+import { productsList } from "../../../assets/productsList";
 import {
   ProductButton,
-  ProductButtonText,
+  ProductButtonsContainer,
   ProductCard,
-  ProductFlag,
   ProductImage,
   ProductInfo,
   ProductPrice,
@@ -13,23 +12,32 @@ import {
   ProductQuantityBox,
   ProductText,
   ProductTitle,
-} from './styles';
+} from "./styles";
 
-import Icon from 'react-native-vector-icons/Ionicons';
-import { colors } from '../../../variables';
+import { View } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { CartItem, useCart } from "../../../CartContext";
 
-export const RenderedItem = (props: { item: Product }) => {
-  const [qtd, onChangeQtd] = useState<string>('');
+export const RenderedItem = (props: { item: CartItem }) => {
+  const { updateAmount, removeFromCart } = useCart();
+  const [qtd, onChangeQtd] = useState<string>("");
+  const cartItem = productsList.find((prd) => prd.id === props.item.id);
+
   return (
     <ProductCard>
-      <ProductImage source={props.item.image} resizeMode="contain" />
+      <ProductImage source={cartItem?.image} resizeMode="contain" />
       <ProductInfo>
-        <ProductTitle numberOfLines={1}>{props.item.name}</ProductTitle>
-        <ProductText>
-          Country: <ProductFlag>{props.item.country}</ProductFlag>
-        </ProductText>
+        <ProductTitle numberOfLines={1}>{cartItem?.name}</ProductTitle>
         <ProductPriceBox>
-          <ProductPrice>R$ {props.item.price.toFixed(2)}</ProductPrice>
+          <View>
+            <ProductText>
+              R$ {cartItem?.price.toFixed(2)} /{" "}
+              <ProductPrice>{props.item?.amount}</ProductPrice> un
+            </ProductText>
+            <ProductPrice>
+              Total: R$ {(cartItem?.price * props.item?.amount).toFixed(2)}
+            </ProductPrice>
+          </View>
           <ProductQuantityBox>
             <ProductText>Qtd:</ProductText>
             <ProductQuantity
@@ -41,11 +49,22 @@ export const RenderedItem = (props: { item: Product }) => {
           </ProductQuantityBox>
         </ProductPriceBox>
       </ProductInfo>
-      <ProductButton>
-        <ProductButtonText>
-          <Icon name="cart" size={20} color={colors.lightColor} /> Add To Cart
-        </ProductButtonText>
-      </ProductButton>
+      <ProductButtonsContainer>
+        <ProductButton
+          onPress={() => {
+            updateAmount(props.item.id, parseFloat(qtd));
+            onChangeQtd("");
+          }}
+        >
+          <Icon name="cart-plus" size={25} color="#fff" />
+        </ProductButton>
+        <ProductButton
+          bgColor={" #c93e32"}
+          onPress={() => removeFromCart(props.item.id)}
+        >
+          <Icon name="cart-remove" size={25} color="#fff" />
+        </ProductButton>
+      </ProductButtonsContainer>
     </ProductCard>
   );
 };
