@@ -6,27 +6,33 @@ import {
   TweetContainer,
   TweetIconButtons,
   TweetImage,
-  TweetInput,
-  TweetTextInput,
+  TweetMessageContainer,
+  TweetText,
+  TweetTextContainer,
+  TweetUser,
+  TweetUserContainer,
 } from './styles';
 
 export const Tweet = () => {
   return (
     <TweetContainer>
-      <TweetInput>
+      <TweetMessageContainer>
         <TweetImage source={require('../../../../assets/avatar.png')} />
-        <TweetTextInput
-          placeholder="O que está acontecendo?"
-          placeholderTextColor={colors.darkGray}
-          multiline
-          maxLength={140}
-          numberOfLines={3}
-          scrollEnabled
-          textAlignVertical="top"
-          selectionColor={colors.blue}
-          blurOnSubmit
-        />
-      </TweetInput>
+        <TweetTextContainer>
+          <TweetUserContainer>
+            <TweetUser>UserName</TweetUser>
+            <MCIcon
+              name="dots-horizontal"
+              size={20}
+              color={colors.extraLightGray}
+            />
+          </TweetUserContainer>
+          <TweetText>
+            Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros
+            commodo tempor.
+          </TweetText>
+        </TweetTextContainer>
+      </TweetMessageContainer>
       <TweetIconButtons>
         <MCIcon
           name="comment-outline"
@@ -40,7 +46,7 @@ export const Tweet = () => {
           color={colors.extraExtraLightGray}
         />
         <MCIcon
-          name="tray-arrow-down"
+          name="tray-arrow-up"
           size={25}
           color={colors.extraExtraLightGray}
         />

@@ -2,6 +2,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from '../../variables';
 import { Tweet } from './components/Tweet';
+import { TweetUser } from './components/Tweet/styles';
 import { TwitterForm } from './components/TwitterForm';
 import {
   FeedContainer,
@@ -28,6 +29,12 @@ export const Feed = ({ navigation }) => {
           <Tweet />
           {/* <NoTweetFeed>No Tweet Available!</NoTweetFeed> */}
         </TwitterFeed>
+        <TweetUser
+          style={{ textAlign: 'center', fontSize: 16 }}
+          onPress={() => navigation.navigate('Login')}
+        >
+          Sair
+        </TweetUser>
       </FeedMain>
     </FeedContainer>
   );

@@ -6,12 +6,12 @@ const TweetContainer = styled.View`
   justify-content: space-between;
   align-items: center;
   padding: 20px 10px;
-  border-bottom-color: ${colors.lightGray};
+  border-bottom-color: ${colors.darkGray};
   border-bottom-width: 1px;
   margin-bottom: 20px;
 `;
 
-const TweetInput = styled.View`
+const TweetMessageContainer = styled.View`
   flex-direction: row;
   width: 100%;
   margin-bottom: 30px;
@@ -19,18 +19,34 @@ const TweetInput = styled.View`
 `;
 
 const TweetImage = styled.Image`
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
 `;
 
-const TweetTextInput = styled.TextInput`
-  font-size: 20px;
-  width: 77%;
-  font-family: Roboto_400Regular;
-  margin: 0 20px;
+const TweetTextContainer = styled.View`
+  width: 95%;
+  padding: 0 20px;
+`;
+
+const TweetUserContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 7px;
+`;
+
+const TweetUser = styled.Text`
+  font-size: 18px;
+  font-family: Roboto_700Bold;
   color: ${colors.extraExtraLightGray};
-  line-height: 25px;
+`;
+
+const TweetText = styled.Text`
+  font-size: 17px;
+  font-family: Roboto_400Regular;
+  color: ${colors.extraExtraLightGray};
+  line-height: 23px;
 `;
 
 const TweetIconButtons = styled.View`
@@ -41,8 +57,11 @@ const TweetIconButtons = styled.View`
 
 export {
   TweetContainer,
-  TweetInput,
+  TweetMessageContainer,
   TweetImage,
-  TweetTextInput,
+  TweetText,
+  TweetTextContainer,
+  TweetUser,
+  TweetUserContainer,
   TweetIconButtons,
 };

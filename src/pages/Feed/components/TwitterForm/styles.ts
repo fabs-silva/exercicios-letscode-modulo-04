@@ -6,7 +6,7 @@ const FormContainer = styled.View`
   justify-content: space-between;
   align-items: center;
   padding: 20px 10px;
-  border-bottom-color: ${colors.lightGray};
+  border-bottom-color: ${colors.darkGray};
   border-bottom-width: 1px;
   margin-bottom: 20px;
 `;

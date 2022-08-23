@@ -1,9 +1,9 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-import { Feed } from "./pages/Feed";
-import { Login } from "./pages/Login";
-import { SignUp } from "./pages/SignUp";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import { Feed } from './pages/Feed';
+import { Login } from './pages/Login';
+import { SignUp } from './pages/SignUp';
 
 const Stack = createNativeStackNavigator();
 

@@ -19,7 +19,7 @@ const LoginHeader = styled.View``;
 
 const LoginMain = styled.View`
   width: 100%;
-  height: 90%;
+  height: 95%;
   justify-content: center;
   padding: 0 40px;
 `;

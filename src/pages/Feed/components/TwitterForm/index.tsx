@@ -32,24 +32,24 @@ export const TwitterForm = () => {
       <FormButtons>
         <FormIconButtons>
           <Icon
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 15 }}
             name="image-outline"
             size={28}
             color={colors.blue}
           />
           <Icon
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 15 }}
             name="file-gif-box"
             size={28}
             color={colors.blue}
           />
           <Icon
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 15 }}
             name="emoticon-happy-outline"
             size={28}
             color={colors.blue}
           />
-          <Icon name="map-marker-outline" size={32} color={colors.blue} />
+          <Icon name="map-marker-outline" size={28} color={colors.blue} />
         </FormIconButtons>
         <FormTweetButton>
           <FormTweetButtonText>Tweetar</FormTweetButtonText>

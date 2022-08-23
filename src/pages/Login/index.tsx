@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { AccountData } from '../../AccountContext';
+import { AppButton } from '../../components/AppButton';
+import { AppInput } from '../../components/AppInput';
+import { getObject } from '../../LocalStorage';
 import { colors } from '../../variables';
 import {
-  LoginButton,
   LoginButtonsContainer,
-  LoginButtonText,
   LoginContainer,
   LoginForm,
   LoginHairline,
@@ -16,10 +19,24 @@ import {
   LoginOption,
   LoginOptionText,
   LoginText,
-  LoginTextInput,
 } from './styles';
 
 export const Login = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [localData, setLocalData] = useState({} as AccountData);
+
+  const handleLogin = () => {
+    getObject('@account').then((result) => setLocalData(result));
+
+    if (username !== localData.username || password !== localData.password) {
+      Alert.alert('Login ou senha inválidos!');
+      return;
+    }
+
+    navigation.navigate('Feed');
+  };
+
   return (
     <LoginContainer>
       <LoginHeader>
@@ -32,14 +49,28 @@ export const Login = ({ navigation }) => {
       <LoginMain>
         <LoginMainTitle>Entrar no Twitter</LoginMainTitle>
         <LoginButtonsContainer>
-          <LoginButton style={{ marginBottom: 25 }}>
-            <Icon name="logo-google" size={20} color="#4285F4" />
-            <LoginButtonText>Continuar com o Google</LoginButtonText>
-          </LoginButton>
-          <LoginButton>
-            <Icon name="logo-apple" size={20} color="#000" />
-            <LoginButtonText>Continuar com a Apple</LoginButtonText>
-          </LoginButton>
+          <AppButton
+            disabled
+            buttonTitle="Continuar com o Google"
+            style={{
+              backgroundColor: colors.lightGray,
+              marginBottom: 25,
+            }}
+            textStyle={{ color: colors.darkGray, marginLeft: 8 }}
+          >
+            <Icon name="logo-google" size={20} color={colors.darkGray} />
+          </AppButton>
+          <AppButton
+            disabled
+            buttonTitle="Continuar com a Apple"
+            style={{
+              backgroundColor: colors.lightGray,
+              marginBottom: 10,
+            }}
+            textStyle={{ color: colors.darkGray, marginLeft: 8 }}
+          >
+            <Icon name="logo-apple" size={20} color={colors.darkGray} />
+          </AppButton>
         </LoginButtonsContainer>
         <LoginOption>
           <LoginHairline />
@@ -49,23 +80,42 @@ export const Login = ({ navigation }) => {
           <LoginHairline />
         </LoginOption>
         <LoginForm>
-          <LoginTextInput
-            placeholder="Celular"
-            placeholderTextColor={colors.darkGray}
-            style={{ marginBottom: 15 }}
+          <AppInput
+            placeholder="Nome de Usuário"
+            maxLenght={15}
+            value={username}
+            onChangeText={setUsername}
           />
-          <LoginTextInput
+          <AppInput
             placeholder="Senha"
-            placeholderTextColor={colors.darkGray}
-            style={{ marginBottom: 30 }}
+            mb={35}
+            secureTextEntry
+            maxLength={8}
+            value={password}
+            onChangeText={setPassword}
           />
-          <LoginButton>
-            <LoginButtonText>Avançar</LoginButtonText>
-          </LoginButton>
+          <AppButton
+            buttonTitle="Entrar"
+            style={{ backgroundColor: colors.extraExtraLightGray }}
+            textStyle={{ color: colors.black }}
+            onPress={handleLogin}
+          />
+          <LoginText
+            style={{
+              color: colors.darkGray,
+              marginTop: 10,
+              textAlign: 'center',
+            }}
+          >
+            Esqueci minha senha
+          </LoginText>
         </LoginForm>
         <LoginNoAccount>
           <LoginText>
-            Não tem uma conta? <LoginLink>Inscreva-se</LoginLink>
+            Não tem uma conta?{' '}
+            <LoginLink onPress={() => navigation.navigate('SignUp')}>
+              Inscreva-se
+            </LoginLink>
           </LoginText>
         </LoginNoAccount>
       </LoginMain>
